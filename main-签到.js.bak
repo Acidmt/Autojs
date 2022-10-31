@@ -1,0 +1,74 @@
+function powerON() {
+    swipe(550, 1800, 550, 700,500) 
+    sleep(randTimes.longTime(1))     
+    click(224, 1200)
+    sleep(randTimes.longTime(1))
+    click(272, 1500)
+    sleep(600)
+    click(803, 1900)
+    sleep(600)
+    click(284, 1900)
+    sleep(500)
+   // sleep(randTimes.longTime(1))
+    click(793, 1500)
+    sleep(400)
+    click(550, 1500)
+    sleep(400)
+    click(810, 1900)
+    sleep(randTimes.longTime(1))
+}
+
+function unlock() {
+        device.wakeUp();
+        console.log("唤醒屏幕")
+        sleep(500);
+        swipe(550, 1800, 550, 700, 500);
+        sleep(500)
+        var password = "197329"
+        for (var i = 0; i < password.length; i++) {
+            var p = text(password[i].toString()).findOne().bounds();
+            click(p.centerX(), p.centerY());
+            sleep(200);
+        }
+}
+
+//随机数
+var randTimes = {
+    longTime: function (max) {
+        //0.7s~1.1s、1.4s~2.2s
+        let value = max * Math.round(Math.random() * 4 + 7);
+        return value * 100;
+    },
+    mediumTime: function (max) {
+
+        let value = max * Math.round(Math.random() * + 7);
+        return value * 100;
+    },
+    shortTime: function (max) {
+        let value = max * Math.round(Math.random() * 4 + 7);
+        return value * 100;
+    }
+}
+
+
+var i=0
+while (i<5) {
+    if (!device.isScreenOn()) {
+        //device.wakeUp()
+        //sleep(randTimes.longTime(1))
+        //console.log("唤醒屏幕")
+        //powerON()
+        unlock()
+        //engines.execScriptFile("/sdcard/脚本/unlock.js")
+        console.log("成功解锁屏幕")
+        sleep(1500)
+    }
+
+    if (device.isScreenOn()) {
+      console.log("执行脚本")
+        engines.execScriptFile("/sdcard/脚本/签到.js")
+        console.log("执行脚本完毕")
+        break
+    }
+    i++
+}

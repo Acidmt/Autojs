@@ -1,0 +1,92 @@
+function openGPS() {
+    sleep(500)
+    swipe(900, 35, 900, 200, 400)
+    sleep(500)
+    click(426, 1713)
+    click(500)
+    swipe(900, 250, 900, 35, 400)
+    sleep(500)
+   // log("打开定位")
+}
+
+function takeScreens() {
+    gestures([0, 500, [450, 800],
+        [450, 1500]
+    ], [0, 500, [600, 800],
+        [600, 1500]
+    ], [0, 500, [750, 800],
+        [750, 1500]
+    ]);
+}
+
+function excited() {
+    //log("执行一次退出")
+    sleep(1000)
+    back()
+    sleep(500)
+    back()
+    sleep(500)
+    back()
+    sleep(1000)
+}
+launch("org.autojs.autojs.dev")
+sleep(2000)
+//home()
+openGPS()
+launch("com.newcapec.mobile.ncp")
+//launch("com.eg.android.AlipayGphone");
+var myTime = new Date().getTime()
+var stime = 0
+sleep(3000)
+while (stime <= 180000) {
+    var startTime = myTime
+    if (currentPackage() != "com.newcapec.mobile.ncp") {
+        break
+    }
+    if (id("dialog_oppotion").depth(6).text("取消").findOnce()) {
+        id("dialog_oppotion").depth(6).text("取消").findOnce().click()
+        sleep(1000)
+
+    }
+    if (id("menuTitle").className("android.widget.TextView").text("健康打卡").findOnce()) {
+        var xy = id("menuTitle").className("android.widget.TextView").text("健康打卡").findOnce().bounds()
+        click(xy.centerX(), xy.centerY())
+    }
+    if (className("android.widget.TextView").text("健康打卡--学生").findOnce()) {
+        var xy = className("android.widget.TextView").text("健康打卡--学生").findOnce().bounds()
+        click(xy.centerX(), xy.centerY())
+
+    }
+    if (className("android.widget.Button").text("再次打卡").exists()) {
+        excited()
+        openGPS()
+        break
+    }
+    if (className("android.view.View").depth(13).text("今日无变化一键打卡").findOnce()) {
+        //penGPS()
+        var xy = className("android.view.View").depth(13).text("今日无变化一键打卡").findOnce().bounds()
+        sleep(700)
+        click(xy.centerX(), xy.centerY())
+        sleep(3000)
+        log("点击签到")
+        if (className("android.view.View").depth(13).text("打卡成功").findOnce()) {
+            takeScreens()
+            console.log("已截图")
+            sleep(2000)
+            excited()
+            sleep(1000)
+            openGPS()
+            break
+        }
+        excited()
+        openGPS()
+        openGPS()
+        launch("com.newcapec.mobile.ncp")
+    }
+    var endTime = new Date().getTime()
+    stime = endTime - startTime
+   // log(stime)
+}
+home()
+sleep(1500)
+launch("com.android.bbk.lockscreen3")

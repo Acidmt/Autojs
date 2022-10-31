@@ -1,0 +1,18 @@
+{
+  "assets": [],
+  "build": {
+    "build_id": "F0698FEB-2",
+    "build_number": 2,
+    "build_time": 1652289991255
+  },
+  "useFeatures": [],
+  "launchConfig": {
+    "hideLogs": true
+  },
+  "main": "main.js",
+  "name": "MainTool",
+  "packageName": "com.demo",
+  "scripts": {},
+  "versionCode": 1,
+  "versionName": "1.0.0"
+}
